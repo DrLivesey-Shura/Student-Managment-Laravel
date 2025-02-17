@@ -1,23 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Students List</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body>
+@section('content')
     <div class="container mt-5">
         <h1 class="mb-4">Students List</h1>
         <a href="{{ route('students.create') }}" class="btn btn-primary mb-3">Add New Student</a>
-
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
 
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
@@ -43,18 +29,15 @@
                         <td>{{ $student->level }}</td>
                         <td>
                             @if ($student->picture)
-                                <img src="{{ asset('storage/' . $student->picture) }}" alt="Student Picture"
-                                    width="50">
+                                <img src="{{ asset('storage/' . $student->picture) }}" alt="Student Picture" width="50">
                             @else
                                 No Image
                             @endif
                         </td>
                         <td>
                             <a href="{{ route('students.show', $student->id) }}" class="btn btn-info btn-sm">View</a>
-                            <a href="{{ route('students.edit', $student->id) }}"
-                                class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('students.destroy', $student->id) }}" method="POST"
-                                class="d-inline">
+                            <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm"
@@ -66,8 +49,4 @@
             </tbody>
         </table>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+@endsection
