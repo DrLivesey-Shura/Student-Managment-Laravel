@@ -3,8 +3,9 @@
 @section('content')
     <div class="container mt-5">
         <h1 class="mb-4">Students List</h1>
-        <a href="{{ route('students.create') }}" class="btn btn-primary mb-3">Add New Student</a>
-
+        @if (auth()->user()->role === 'admin')
+            <a href="{{ route('students.create') }}" class="btn btn-primary mb-3">Add New Student</a>
+        @endif
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
@@ -36,13 +37,16 @@
                         </td>
                         <td>
                             <a href="{{ route('students.show', $student->id) }}" class="btn btn-info btn-sm">View</a>
-                            <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure?')">Delete</button>
-                            </form>
+                            @if (auth()->user()->role === 'admin')
+                                <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{{ route('students.destroy', $student->id) }}" method="POST"
+                                    class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Are you sure?')">Delete</button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
